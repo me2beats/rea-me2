@@ -1,0 +1,2 @@
+val = get_action_context();
+val > 0 ? Main_OnCommand(1007, 0) : Main_OnCommand(1016, 0);
