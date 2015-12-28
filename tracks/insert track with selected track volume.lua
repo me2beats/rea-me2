@@ -13,5 +13,5 @@ if reaper.CountSelectedMediaItems(0) > 0 then
 	tr_n = reaper.GetSelectedTrack(0, 0)
   end
   ok_1, vol_1, pan_1 = reaper.GetTrackUIVolPan(tr_n, 0, 0)
-  reaper.SetMediaTrackInfo_Value(tr_n, "D_VOL", vol*0.5)
+  reaper.SetMediaTrackInfo_Value(tr_n, "D_VOL", vol)
 end
