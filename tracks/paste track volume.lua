@@ -1,10 +1,12 @@
 sel_tr_count = reaper.CountSelectedTracks(0)
-if reaper.CountSelectedMediaItems(0) > 0 then
+if sel_tr_count ~= nil then
   vol = reaper.GetExtState("Buffer", "vol")
-  for i = 0, sel_tr_count-1 do
-    tr = reaper.GetSelectedTrack(0, i)
-    ok_1, vol_1, pan_1 = reaper.GetTrackUIVolPan(tr, 0, 0)
-    reaper.SetMediaTrackInfo_Value(tr, "D_VOL", vol)
-    i = i+1
+  if vol ~= nil then
+    for i = 1, sel_tr_count do
+      tr = reaper.GetSelectedTrack(0, i-1)
+      if tr ~= nil then
+        reaper.SetMediaTrackInfo_Value(tr, "D_VOL", vol)
+      end
+    end
   end
-end
+end  
