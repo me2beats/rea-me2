@@ -1,6 +1,6 @@
 sel_tr_count = reaper.CountSelectedTracks(0)
 if sel_tr_count ~= nil then
-  tr_recmode = reaper.GetExtState("Buffer", "recmode")
+  tr_recmode = reaper.GetExtState("me2beats_copy-paste", "recmode")
   if tr_recmode ~= nil then
     for i = 1, sel_tr_count do
       tr = reaper.GetSelectedTrack(0, i-1)
