@@ -7,7 +7,7 @@ if sel_tr ~= nil then
     t = sel_tr_num
     while (status == 0 and t ~= num_of_tracks) do 
       got_tr = reaper.GetTrack(0, t)
-      if reaper.GetMediaTrackInfo_Value(got_tr, "I_SOLO") == 2 then
+      if (reaper.GetMediaTrackInfo_Value(got_tr, "I_SOLO") == 2 or reaper.GetMediaTrackInfo_Value(got_tr, "I_SOLO") == 1) then
         status = 1
       end
       if (t == num_of_tracks and status ~= 1) then 
