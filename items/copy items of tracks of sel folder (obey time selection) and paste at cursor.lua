@@ -3,15 +3,19 @@ function get_last_tr_in_folder()
 -- function needs: sel_tr, sel_tr_dep
   
   tracks = reaper.CountTracks(0)
-  tr_num = reaper.GetMediaTrackInfo_Value(reaper.GetSelectedTrack(0, 0), 'IP_TRACKNUMBER')
+  tr_num = reaper.GetMediaTrackInfo_Value(sel_tr, 'IP_TRACKNUMBER')
   cand_dep = sel_tr_dep
-  for t = tr_num, tracks-1 do
-    cand_last_tr = reaper.GetTrack(0,t)
-    add_dep = reaper.GetMediaTrackInfo_Value(cand_last_tr, 'I_FOLDERDEPTH')
-    cand_dep = cand_dep + add_dep
-    if cand_dep <= 0 then
-      last_tr = cand_last_tr
-      break
+  if tr_num == tracks then --  if there's no children in sel folder (folder track is last in tracklist)
+    last_tr = reaper.GetTrack(0,tr_num-1)
+  else
+    for t = tr_num, tracks-1 do
+      cand_last_tr = reaper.GetTrack(0,t)
+      add_dep = reaper.GetMediaTrackInfo_Value(cand_last_tr, 'I_FOLDERDEPTH')
+      cand_dep = cand_dep + add_dep
+      if cand_dep <= 0 or t+1 == tracks then
+        last_tr = cand_last_tr
+        break
+      end
     end
   end
 end
@@ -43,7 +47,7 @@ if sel_tr ~= nil and (end_ts - start_ts) > 0 then
     
     cur_pos = reaper.GetCursorPosition()
     
-    reaper.ApplyNudge(0, 0, 5, 1, cur_pos, false, 0)
+    reaper.ApplyNudge(0, 0, 5, 1, cur_pos-start_ts, false, 0)
     
     reaper.SetOnlyTrackSelected(sel_tr)
     
