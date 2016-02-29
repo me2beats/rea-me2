@@ -17,6 +17,10 @@ if tr ~= nil then
     if more == 1 and less == 1 then
       reaper.MB("Can't do this. My coder will fix this later.", '', 0)
     elseif more+less == 1 then
+    
+    script_title = 'Duplicate selected items to selected track'
+    reaper.Undo_BeginBlock()
+    
       reaper.PreventUIRefresh(1)
       if reaper.GetToggleCommandState(41117) == 1 then  -- check 'trim behind items'
         trim = 1
@@ -32,12 +36,7 @@ if tr ~= nil then
       if trim == 1 then reaper.Main_OnCommand(41117, 0) end
       reaper.PreventUIRefresh(-1)
       reaper.UpdateArrange()
-      u = 1
       
-    end
-    if u == 1 then
-      script_title = 'Duplicate selected items to selected track'
-      reaper.Undo_BeginBlock()
       reaper.Undo_EndBlock(script_title, -1)
     else
       reaper.defer(nothing)
