@@ -11,7 +11,7 @@ end
 
 items = reaper.CountSelectedMediaItems(0)
 if items > 0 then
-  script_title = 'Trim sel items edges to nearest grid divisions'
+  script_title = 'Trim sel items edges to nearest grid divisions (increase items length)'
   reaper.Undo_BeginBlock()
   reaper.PreventUIRefresh(1)
   if items == 1 then
