@@ -16,7 +16,7 @@ if tr ~= nil then
   reaper.Undo_BeginBlock(); reaper.PreventUIRefresh(111)
   t1 = {}
   sel_tr_num = reaper.GetMediaTrackInfo_Value(tr, 'IP_TRACKNUMBER')
-  for t = 0, sel_tr_num do
+  for t = 0, sel_tr_num-1 do
     track = reaper.GetTrack(0,t); reaper.SetTrackSelected(track, true)
   end
   SaveSelectedTracks (t1)
