@@ -1,4 +1,5 @@
 function last_track_in_folder (folder_tr)
+  last = nil
   local dep = reaper.GetTrackDepth(folder_tr)
   local num = reaper.GetMediaTrackInfo_Value(folder_tr, 'IP_TRACKNUMBER')
   local tracks = reaper.CountTracks(0)
