@@ -25,4 +25,3 @@ if cur_proj ~= 1 then
   end
   reaper.PreventUIRefresh(-111); reaper.Undo_EndBlock('Go to first project tab', -1)
 else reaper.defer(nothing) end
-

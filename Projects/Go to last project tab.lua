@@ -23,5 +23,5 @@ if cur_proj ~= projects then
   else
     for i = cur_proj, projects-1 do reaper.Main_OnCommand(40861,0) end -- next project tab
   end
-  reaper.PreventUIRefresh(-111); reaper.Undo_EndBlock('Go to first project tab', -1)
+  reaper.PreventUIRefresh(-111); reaper.Undo_EndBlock('Go to last project tab', -1)
 else reaper.defer(nothing) end
