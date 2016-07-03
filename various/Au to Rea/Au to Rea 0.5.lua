@@ -91,7 +91,7 @@ function get_element (data, tag)
   if spaces then return dirty:sub(#spaces+2,-#spaces-2) end
 end
 
-retval, path_ = reaper.GetUserInputs("Au to Rea 0.4", 1, "Path:", "")
+retval, path_ = reaper.GetUserInputs("Au to Rea 0.5", 1, "Path:", "")
 if retval == true and path_ and path_ ~= '' then
   path = Utf8ToAnsi(path_)
   os = reaper.GetOS()
@@ -106,8 +106,7 @@ if retval == true and path_ and path_ ~= '' then
     xml = io.open(filename_esc, "r")
     if xml then xml_data = xml:read('*a'); xml:close() end
     if xml_data then
-    
-      reaper.PreventUIRefresh(111)
+      reaper.Undo_BeginBlock(); reaper.PreventUIRefresh(111)
     
       if reaper.GetToggleCommandState(40041) == 1 then -- toggle auto-crossfade
         autocrsf = 1; reaper.Main_OnCommand(40041, 0) -- toggle auto-crossfade
@@ -169,8 +168,8 @@ if retval == true and path_ and path_ ~= '' then
       if trimcnt then reaper.Main_OnCommand(41117, 0) end -- toggle trim behind
       
       reaper.TrackList_AdjustWindows(0)
-      reaper.PreventUIRefresh(-111)
+      reaper.PreventUIRefresh(-111); reaper.Undo_EndBlock('Au to Rea', -1)
       
-    end
-  end
-end
+    else reaper.defer(nothing) end
+  else reaper.defer(nothing) end
+else reaper.defer(nothing) end
