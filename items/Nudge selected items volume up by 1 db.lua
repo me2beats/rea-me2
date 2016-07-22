@@ -1,6 +1,6 @@
 local db = 1
 
-local r = reaper; function nothing() end; function bla() r.defer(nothing) end;
+local r = reaper; function nothing() end; function bla() r.defer(nothing) end
 
 local items = r.CountSelectedMediaItems(0)
 if items > 0 then
