@@ -1,6 +1,6 @@
 local db = -1
 
-local r = reaper; function nothing() end; function bla() r.defer(nothing) end;
+local r = reaper; function nothing() end; function bla() r.defer(nothing) end
 
 local items = r.CountSelectedMediaItems(0)
 if items > 0 then
@@ -13,6 +13,6 @@ if items > 0 then
       r.SetMediaItemInfo_Value(it, 'D_VOL', it_vol*10^(0.05*db))
       r.UpdateItemInProject(it)
     end        
-    r.PreventUIRefresh(-111); r.Undo_EndBlock('Nudge sel items volume up by 1 db', -1)
+    r.PreventUIRefresh(-111); r.Undo_EndBlock('Nudge sel items volume down by 1 db', -1)
   else bla() end
 else bla() end
