@@ -1,18 +1,18 @@
 --------------- fade in settings (change it!)
-in_len = 0.01
-in_curve = ''
-in_shape = ''
+local in_len = 0.1
+local in_curve = ''
+local in_shape = ''
 --------------- fade out settings (change it!)
-out_len = 0.01
-out_curve = ''
-out_shape = ''
+local out_len = 0.1
+local out_curve = ''
+local out_shape = ''
 --------------------------------
 in_len, in_curve, in_shape = tonumber(in_len), tonumber(in_curve), tonumber(in_shape)
 out_len, out_curve, out_shape = tonumber(out_len), tonumber(out_curve), tonumber(out_shape)
 
 local r = reaper local function nothing() end
 
-items = r.CountSelectedMediaItems(0)
+local items = r.CountSelectedMediaItems(0)
 
 if items > 0 then
 
