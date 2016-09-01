@@ -1,0 +1,20 @@
+r = reaper
+take = r.MIDIEditor_GetTake(reaper.MIDIEditor_GetActive())
+if take then
+  notes = r.MIDI_CountEvts(take)
+  window, segment, details = r.BR_GetMouseCursorContext()
+  _, noteRow = r.BR_GetMouseCursorContext_MIDI()
+  if noteRow ~= -1 then
+    r.Undo_BeginBlock(); r.PreventUIRefresh(111)
+    mouse_time = r.BR_GetMouseCursorContext_Position()
+    mouse_ppq_pos = r.MIDI_GetPPQPosFromProjTime(take, mouse_time)
+    x = 1
+    for i = 0, notes - 1 do
+      retval, sel, muted, start_note, end_note, chan, pitch, vel = r.MIDI_GetNote(take, i)
+      if start_note < mouse_ppq_pos and end_note > mouse_ppq_pos then
+        r.MIDI_SetNote(take, i, 1, muted, start_note, end_note, chan, pitch, vel)
+      end
+    end
+    r.PreventUIRefresh(-111); r.Undo_EndBlock('select chord under mouse', 0)
+  end
+end
