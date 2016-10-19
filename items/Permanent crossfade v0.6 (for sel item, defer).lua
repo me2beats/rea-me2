@@ -27,7 +27,8 @@ function perm_crossfade()
       if fadeout then
 
         for i = 0, tr_items-1 do
-          local tr_item = r.GetMediaItem(p, i)
+
+          local tr_item =  reaper.GetTrackMediaItem(tr, i)
 
           if tr_item ~= item then
 
@@ -73,7 +74,7 @@ function perm_crossfade()
         end
 
         for i = 0, tr_items-1 do
-          local tr_item = r.GetMediaItem(p, i)
+          local tr_item =  reaper.GetTrackMediaItem(tr, i)
 
           if tr_item ~= item then
 
