@@ -6,9 +6,9 @@ local it = r.GetSelectedMediaItem(0,0)
 if not it then return end
 local tk = r.GetActiveTake(it)
 if not tk then return end
-src = r.GetMediaItemTake_Source(tk)
+local src = r.GetMediaItemTake_Source(tk)
 if not src then return end
-src_fn = r.GetMediaSourceFileName(src, '')
+local src_fn = r.GetMediaSourceFileName(src, '')
 
 r.OpenMediaExplorer(src_fn, 0)
 
