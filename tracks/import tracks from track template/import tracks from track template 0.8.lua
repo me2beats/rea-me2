@@ -1,8 +1,8 @@
-tp = 'test'
+local tp = '12345'
 
 local r = reaper; local function nothing() end; local function bla() r.defer(nothing) end
 
-function os_file_data (path, addstr)
+local function os_file_data (path, addstr)
 --needs OS == r.GetOS()
 
   if path then
@@ -22,9 +22,9 @@ function os_file_data (path, addstr)
 end
 
 
-res_path = r.GetResourcePath()
+local res_path = r.GetResourcePath()
 
-OS = r.GetOS()
+local OS = r.GetOS()
 
 
 if OS == 'Win32' or 'Win64' then
@@ -33,20 +33,20 @@ else tp_path = res_path..[[/TrackTemplates]] end
 
 
 for i = 0, 1000 do
-  fn = r.EnumerateFiles(tp_path, i)
+  local fn = r.EnumerateFiles(tp_path, i)
   if not fn or fn == '' then break
   elseif fn == tp..[[.RTrackTemplate]] then
-    _, tp_data = os_file_data(tp_path,fn)
+    local _, tp_data = os_file_data(tp_path,fn)
     if tp_data then
       r.Undo_BeginBlock()
 
-      for chunk in tp_data:gmatch'(<TRACK.->)' do
-        tracks = r.CountTracks(0)
+      for chunk in tp_data:gmatch'(<TRACK.->\n>)' do
+        local tracks = r.CountTracks()
         r.InsertTrackAtIndex(tracks, 0)
-        tr = r.GetTrack(0,tracks)
+        local tr = r.GetTrack(0,tracks)
         r.SetTrackStateChunk(tr, chunk, 0)
       end
-      
+
       r.TrackList_AdjustWindows(0)
 
       r.Undo_EndBlock('import tracks from track template', -1)
