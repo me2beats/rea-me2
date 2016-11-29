@@ -20,6 +20,7 @@ local function get_active_take_fx_str(item)
   local _, chunk = r.GetItemStateChunk(item, '', 0)
   if not chunk:match'\nTAKE SEL' then
     local take_fx_ = chunk:match'\nNAME .-\n(<TAKEFX.-\nWAK .->.-)\nNAME '
+    if not take_fx_ then take_fx = 0 return take_fx end
     if take_fx_:match'\nNAME ' then take_fx = 0 else
       take_fx = chunk:match'(<TAKEFX.-\nWAK .->).-\nNAME '
     end
