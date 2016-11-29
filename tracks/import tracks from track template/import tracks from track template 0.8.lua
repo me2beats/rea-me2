@@ -1,4 +1,4 @@
-local tp = '12345'
+local tp = 'test'
 
 local r = reaper; local function nothing() end; local function bla() r.defer(nothing) end
 
@@ -39,12 +39,15 @@ for i = 0, 1000 do
     local _, tp_data = os_file_data(tp_path,fn)
     if tp_data then
       r.Undo_BeginBlock()
+      if tp_data:match'>\n>' then pattern = "(<TRACK.->\n>)"
+      else pattern = "(<TRACK.->)" end
+      for chunk in tp_data:gmatch(pattern) do
 
-      for chunk in tp_data:gmatch'(<TRACK.->\n>)' do
         local tracks = r.CountTracks()
         r.InsertTrackAtIndex(tracks, 0)
         local tr = r.GetTrack(0,tracks)
         r.SetTrackStateChunk(tr, chunk, 0)
+
       end
 
       r.TrackList_AdjustWindows(0)
