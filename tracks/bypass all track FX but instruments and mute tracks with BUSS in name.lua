@@ -1,13 +1,13 @@
 local r = reaper; local function nothing() end; local function bla() r.defer(nothing) end
 
-local tracks = r.CountTracks()
+tracks = r.CountTracks()
 if tracks == 0 then bla() return end
 
 r.Undo_BeginBlock()
 
 for i = 0, tracks-1 do
-  local tr = r.GetTrack(0,i)
-  local instr_idx = r.TrackFX_GetInstrument(tr)
+  tr = r.GetTrack(0,i)
+  instr_idx = r.TrackFX_GetInstrument(tr)
   if instr_idx ~= -1 then goto continue end
   
   fx = r.TrackFX_GetCount(tr)
@@ -17,10 +17,10 @@ for i = 0, tracks-1 do
   end
   
   ::continue::
-  
-  if r.GetTrackNumSends(tr, 0) > 0 then 
+  _, tr_name = r.GetSetMediaTrackInfo_String(tr, 'P_NAME', '', 0)
+  if tr_name:match'BUSS' then
     muted = r.GetMediaTrackInfo_Value(tr, 'B_MUTE')
-    if muted == false then r.SetMediaTrackInfo_Value(tr, 'B_MUTE',1) end
+    if muted == 0 then r.SetMediaTrackInfo_Value(tr, 'B_MUTE',1) end
   end
   
 end
