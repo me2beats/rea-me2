@@ -19,21 +19,21 @@ for i = 0, tracks-1 do
     instr_idx = r.TrackFX_GetInstrument(tr)
     if instr_idx == -1 or instr_idx ~= j then
       
-      if state == 0 then r.TrackFX_SetEnabled(tr, j, 0)
-      else r.TrackFX_SetEnabled(tr, j, 1) end
+      if state == 1 then r.TrackFX_SetEnabled(tr, j, 1)
+      else r.TrackFX_SetEnabled(tr, j, 0) end
     end
   end
 
   _, tr_name = r.GetSetMediaTrackInfo_String(tr, 'P_NAME', '', 0)
   if tr_name:match(name) then
-    if state == 0 then r.SetMediaTrackInfo_Value(tr, 'B_MUTE',1)
-    else r.SetMediaTrackInfo_Value(tr, 'B_MUTE',0) end
+    if state == 1 then r.SetMediaTrackInfo_Value(tr, 'B_MUTE',0)
+    else r.SetMediaTrackInfo_Value(tr, 'B_MUTE',1) end
   end
 end
 
 
-if state == 0 then r.SetToggleCommandState( sec, cmd, 1 )
-else r.SetToggleCommandState( sec, cmd, 0 ) end
+if state == 1 then r.SetToggleCommandState(sec, cmd, 0)
+else r.SetToggleCommandState(sec, cmd, 1) end
 
 r.RefreshToolbar2(sec, cmd)
 
