@@ -1,14 +1,12 @@
-tr = reaper.GetSelectedTrack(0, 0)
-if tr ~= nil then
-  script_title = "tcp layout copy"
-  reaper.Undo_BeginBlock()
-  
-  _, tcp_layout = reaper.BR_GetMediaTrackLayouts(tr)
-  reaper.SetExtState("me2beats copy-paste", "tcp_layout", tcp_layout, false)
+local r = reaper; local function nothing() end; local function bla() r.defer(nothing) end
 
-  reaper.Undo_EndBlock(script_title, -1)
-else
-  function nothing()
-  end
-  reaper.defer(nothing)
-end
+tr = r.GetSelectedTrack(0, 0)
+if not tr then bla() return end
+
+r.Undo_BeginBlock()
+
+_, tcp_layout = r.BR_GetMediaTrackLayouts(tr)
+r.DeleteExtState('me2beats_copy-paste', 'tcp_layout', 0)
+r.SetExtState('me2beats copy-paste', 'tcp_layout', tcp_layout, 0)
+
+r.Undo_EndBlock('tcp layout copy', -1)
