@@ -1,5 +1,9 @@
-tr = reaper.GetSelectedTrack(0, 0)
-if tr ~= nil then
-  tr_color = reaper.GetMediaTrackInfo_Value(tr, "I_CUSTOMCOLOR")
-  reaper.SetExtState("me2beats_copy-paste", "color", tr_color, false)
-end
+local r = reaper
+
+tr = r.GetSelectedTrack(0, 0)
+if not tr then return end
+
+tr_color = r.GetMediaTrackInfo_Value(tr, 'I_CUSTOMCOLOR')
+
+r.DeleteExtState('me2beats_copy-paste', 'tr_color', 0)
+r.SetExtState('me2beats_copy-paste', 'tr_color', tr_color, 0)

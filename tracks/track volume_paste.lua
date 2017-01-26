@@ -1,12 +1,16 @@
-sel_tr_count = reaper.CountSelectedTracks(0)
-if sel_tr_count ~= nil then
-  vol = reaper.GetExtState("me2beats_copy-paste", "vol")
-  if vol ~= nil then
-    for i = 1, sel_tr_count do
-      tr = reaper.GetSelectedTrack(0, i-1)
-      if tr ~= nil then
-        reaper.SetMediaTrackInfo_Value(tr, "D_VOL", vol)
-      end
-    end
-  end
-end  
+local r = reaper; local function nothing() end; local function bla() r.defer(nothing) end
+
+sel_tr_count = r.CountSelectedTracks()
+if sel_tr_count == 0 then bla() return end
+
+vol = r.GetExtState('me2beats_copy-paste', 'tr_vol')
+if not (vol and vol ~= '') then bla() return end
+
+r.Undo_BeginBlock() r.PreventUIRefresh(1)
+
+for i = 0, sel_tr_count-1 do
+  tr = r.GetSelectedTrack(0, i)
+  r.SetMediaTrackInfo_Value(tr, 'D_PAN', vol)
+end
+
+r.PreventUIRefresh(-1) r.Undo_EndBlock('paste track volume', -1)
